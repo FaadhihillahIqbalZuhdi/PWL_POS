@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserModel extends Model
 {
@@ -12,6 +14,20 @@ class UserModel extends Model
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
     
-    // Kolom yang bisa diisi secara massal
-    protected $fillable = ['username', 'nama', 'password', 'level_id'];
+    /**
+     * The attributes that are mass assignable.
+     * 
+     * @var array
+     */
+    protected $fillable = ['level_id', 'username', 'nama', 'password'];
+
+    // public function level(): HasOne {
+    //     return $this->hasOne(LevelModel::class);
+    // }
+
+    // Praktikum 2.7
+    public function level(): BelongsTo 
+    {
+        return $this->belongsTo(LevelModel::class, 'level_id', 'Level_id');
+    }
 }
