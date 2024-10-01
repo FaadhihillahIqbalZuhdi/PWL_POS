@@ -6,12 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{config('app.name', 'PWL Laravel Starter Code')}}</title>
 
+  <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- untuk mengirimkan token Laravel CSRF pada setiap request ajax -->
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('adminlte/pluggins/datatables-bs4/css/dataTables.bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/pluggins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/pluggins/datatables-button/css/buttons.bootstrap4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+
+  @stack('css') <!-- digunakan untuk memanggil custom css dari perintah push('css') pada masing-masing view -->
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -21,7 +29,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ url('/') }}" class="brand-link">
-      <img src="{{ assets('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">PWL - Starter code</span>
     </a>
 
@@ -32,7 +40,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('layouts.breadcrump')
+    @include('layouts.breadcrumb')
 
     <!-- Main content -->
     <section class="content">
@@ -50,7 +58,25 @@
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- DataTables & Plugins -->
+<script src="{{ asset('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-button/js/dataTables.button.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-button/js/button.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/pdfmake/vfs_fonts.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-button/js/button.html5.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-button/js/button.print.min.js') }}"></script>
+<script src="{{ asset('adminlte/plugins/datatables-button/js/button.colvis.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+<script>
+  // untuk mengirimkan token Laravel CSRF pada setiap request ajax
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+</script>
+@stack('js'){{-- Digunakan untuk memanggil custom js dari perintah push('js') pada masing-masing view --}}
 </body>
 </html>
